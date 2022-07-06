@@ -1,0 +1,33 @@
+name: Build and Test WasmEdge on OpenWrt platform
+
+concurrency:
+  group: build-${{ github.head_ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build_openwrt:
+    name: OpenWrt-x86_64
+    runs-on: ubuntu-latest
+    container:
+      image: sulinggg/openwrt:x86_64
+    steps:
+    - name: Install WasmEdge ipk
+      run: |
+        curl -sLO  https://github.com/O3Ol/openwrt-build/releases/download/openwrt-wasmedge-0.10.0/WasmEdge_0.10.0_x86_64-ipk.tgz -o WasmEdge_0.10.0_x86_64-ipk.tgz
+        tar zxvf WasmEdge_0.10.0_x86_64-ipk.tgz -C ./
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Build WasmEdge
+      run: |
+        opkg install ./WasmEdge_0.10.0_x86_64.ipk
+    - name: Test WasmEdge
+      run: |
+        wasmedge -v
+        #ctest
+        cd -
