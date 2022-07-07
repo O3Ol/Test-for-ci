@@ -22,7 +22,8 @@ jobs:
     steps:
     - name: Install openwrt image
       run: |
-        bash
+        /sbin/init
+        bash 
         ls
 #     - name: Install WasmEdge ipk
 #       run: |
