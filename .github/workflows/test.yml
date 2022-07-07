@@ -23,6 +23,7 @@ jobs:
       run: |
         curl -sLO  https://github.com/O3Ol/openwrt-build/releases/download/openwrt-wasmedge-0.10.0/WasmEdge_0.10.0_x86_64-ipk.tgz -o WasmEdge_0.10.0_x86_64-ipk.tgz
         tar zxvf WasmEdge_0.10.0_x86_64-ipk.tgz -C ./
+        ls
     - name: Build WasmEdge
       run: |
         opkg install ./WasmEdge_0.10.0_x86_64.ipk
