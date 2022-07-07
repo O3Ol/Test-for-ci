@@ -20,24 +20,23 @@ jobs:
       image: sulinggg/openwrt:x86_64
       options: --privileged
     steps:
-    - name: Install openwrt image
-      run: |
-        ls /bin/
+#     - name: Install openwrt image
+#       run: |
+#         ls /bin/
 #     - name: Install openwrt image
 #       run: |
 #         docker pull registry.cn-shanghai.aliyuncs.com/suling/openwrt:x86_64
 #         docker run --name openwrt -d --privileged registry.cn-shanghai.aliyuncs.com/suling/openwrt:x86_64 /sbin/init
 #         docker exec openwrt bash
 #         ls /
-#     - name: Install WasmEdge ipk
-#       run: |
-#         /sbin/init
-#     - name: Build WasmEdge
-#       run: |
-#         curl -sLO  https://github.com/O3Ol/openwrt-build/releases/download/openwrt-wasmedge-0.10.0/WasmEdge_0.10.0_x86_64-ipk.tgz -o WasmEdge_0.10.0_x86_64-ipk.tgz
-#         tar zxvf WasmEdge_0.10.0_x86_64-ipk.tgz -C ./
-#         ls
-#         opkg install ./WasmEdge_0.10.0_x86_64.ipk
+    - name: Install WasmEdge ipk
+      run: |
+        curl -sLO  https://github.com/O3Ol/openwrt-build/releases/download/openwrt-wasmedge-0.10.0/WasmEdge_0.10.0_x86_64-ipk.tgz -o WasmEdge_0.10.0_x86_64-ipk.tgz
+        tar zxvf WasmEdge_0.10.0_x86_64-ipk.tgz -C /tmp
+    - name: Build WasmEdge
+      run: |
+        /bin/opkg install /tmp/WasmEdge_0.10.0_x86_64.ipk
+        ls /bin
 #     - name: Test WasmEdge
 #       run: |
 #         wasmedge -v
