@@ -16,14 +16,15 @@ jobs:
   build_openwrt:
     name: OpenWrt-x86_64
     runs-on: ubuntu-latest
-    container:
-      image: sulinggg/openwrt:x86_64
-      options: --privileged
+#     container:
+#       image: sulinggg/openwrt:x86_64
+#       options: --privileged
     steps:
     - name: Install openwrt image
       run: |
-        /sbin/init
-        bash 
+        docker pull registry.cn-shanghai.aliyuncs.com/suling/openwrt:x86_64
+        docker run --name openwrt -d --privileged registry.cn-shanghai.aliyuncs.com/suling/openwrt:x86_64 /sbin/init
+        docker exec openwrt bash
         ls
 #     - name: Install WasmEdge ipk
 #       run: |
