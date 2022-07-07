@@ -35,8 +35,7 @@ jobs:
         tar zxvf WasmEdge_0.10.0_x86_64-ipk.tgz -C /tmp
     - name: Build WasmEdge
       run: |
-        /bin/opkg install /tmp/WasmEdge_0.10.0_x86_64.ipk
-        ls /bin
+        /bin/opkg
 #     - name: Test WasmEdge
 #       run: |
 #         wasmedge -v
