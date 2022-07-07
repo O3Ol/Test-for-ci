@@ -25,7 +25,7 @@ jobs:
         docker pull registry.cn-shanghai.aliyuncs.com/suling/openwrt:x86_64
         docker run --name openwrt -d --privileged registry.cn-shanghai.aliyuncs.com/suling/openwrt:x86_64 /sbin/init
         docker exec openwrt bash
-        ls /tmp
+        ls /
 #     - name: Install WasmEdge ipk
 #       run: |
 #         /sbin/init
