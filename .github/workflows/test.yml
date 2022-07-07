@@ -22,7 +22,7 @@ jobs:
     steps:
     - name: Install openwrt image
       run: |
-        ls /
+        ls /var/lock/
 #     - name: Install openwrt image
 #       run: |
 #         docker pull registry.cn-shanghai.aliyuncs.com/suling/openwrt:x86_64
