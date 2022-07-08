@@ -35,8 +35,6 @@ jobs:
         mkdir /var/lock
         /bin/opkg install /tmp/WasmEdge_0.10.0_x86_64.ipk
         ls /bin
-#     - name: Test WasmEdge
-#       run: |
-#         wasmedge -v
-#         #ctest
-#         cd -
+    - name: Test WasmEdge
+      run: |
+        wasmedge -v
