@@ -37,4 +37,6 @@ jobs:
         ls /bin
     - name: Test WasmEdge
       run: |
+        file /usr/bin/wasmedge
+        ls /usr/lib
         wasmedge -v
