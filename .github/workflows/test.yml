@@ -27,6 +27,12 @@ jobs:
 #         docker exec openwrt bash
 #         ls /
 
+    - name: Build curl
+      run: |
+        mkdir /var/lock
+        /bin/opkg install curl
+        ls /bin
+
     - name: Install WasmEdge ipk
       run: |
         curl -sLO  https://github.com/O3Ol/openwrt-build/releases/download/test/WasmEdge_0.10.0_x86_64.ipk -o WasmEdge_0.10.0_x86_64.ipk
