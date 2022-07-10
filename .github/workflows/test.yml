@@ -37,6 +37,6 @@ jobs:
         ls /bin
     - name: Test WasmEdge
       run: |
-        file /usr/bin/wasmedge
         ls /usr/lib
+        export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/:/usr/lib/wasmedge/
         wasmedge -v
