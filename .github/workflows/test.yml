@@ -52,7 +52,7 @@ jobs:
         docker pull ankann/openwrt:openwrt-x86_64-v22.03.0-rc4
         docker run --name openwrt -d --privileged ankann/openwrt:openwrt-x86_64-v22.03.0-rc4 /sbin/init
         docker cp ./test.txt openwrt:/
-        docker exec -it openwrt cat /test.txt && opkg -v
+        docker exec openwrt cat /test.txt && opkg -v
 
     - name: Build curl
       run: |
