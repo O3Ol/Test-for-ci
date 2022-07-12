@@ -57,7 +57,7 @@ jobs:
 
     - name: Build curl
       run: |
-        mkdir /var/lock
+        ls /
         /bin/opkg update
         /bin/opkg search curl
         /bin/opkg install curl
