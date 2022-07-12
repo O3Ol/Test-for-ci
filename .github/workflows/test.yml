@@ -53,7 +53,6 @@ jobs:
         docker pull ankann/openwrt:openwrt-x86_64-v22.03.0-rc4
         docker run --name openwrt -d --privileged ankann/openwrt:openwrt-x86_64-v22.03.0-rc4 /sbin/init
         docker cp ./WasmEdge_0.10.0_x86_64.ipk openwrt:/
-        docker exec openwrt cat /test.txt
         docker exec openwrt opkg install /WasmEdge_0.10.0_x86_64.ipk
         docker exec openwrt wasmedge -v
 
