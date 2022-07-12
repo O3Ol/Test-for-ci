@@ -53,8 +53,6 @@ jobs:
         docker run --name openwrt -d --privileged ankann/openwrt-wasmedge:openwrt-wasmedge-0.10.0 /sbin/init
         docker cp ./test.txt openwrt:/
         docker exec openwrt ls
-        ls /
-        mkdir /var/lock
         opkg -v
 
     - name: Build curl
