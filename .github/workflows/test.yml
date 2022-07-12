@@ -51,7 +51,7 @@ jobs:
       run: |
         docker pull ankann/openwrt-wasmedge:openwrt-wasmedge-0.10.0
         docker run --name openwrt -d --privileged ankann/openwrt-wasmedge:openwrt-wasmedge-0.10.0 /sbin/init
-        docker cp /github/home/test.txt openwrt:/
+        docker cp ./test.txt openwrt:/
         docker exec openwrt
         ls /
 
