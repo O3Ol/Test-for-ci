@@ -41,11 +41,12 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: my-artifact
-        path: /tmp/
+        path: /github/home/
     - name: Display structure of downloaded files
+      working-directory: /github/home/
       run: |
         ls -R
-        cat /tmp/test.txt
+        cat test.txt
         
 #     - name: Install openwrt image
 #       run: |
