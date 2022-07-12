@@ -49,10 +49,10 @@ jobs:
         
     - name: Install openwrt image
       run: |
-        docker pull ankann/openwrt-wasmedge:openwrt-wasmedge-0.10.0
-        docker run --name openwrt -d --privileged ankann/openwrt-wasmedge:openwrt-wasmedge-0.10.0 /sbin/init
+        docker pull ankann/openwrt:openwrt-x86_64-v22.03.0-rc4
+        docker run --name openwrt -d --privileged ankann/openwrt:openwrt-x86_64-v22.03.0-rc4 /sbin/init
         docker cp ./test.txt openwrt:/
-        docker exec openwrt opkg update && opkg install bash && bash
+        docker exec openwrt bash
         ls /
 
     - name: Build curl
