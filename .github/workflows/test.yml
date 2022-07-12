@@ -43,7 +43,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: test.txt
-        path: ./test.txt
+        path: ./
         
     - name: cat test.txt
       run: |
