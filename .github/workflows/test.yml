@@ -41,9 +41,8 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: my-artifact
-        path: /github/home/
+        path: ./
     - name: Display structure of downloaded files
-      working-directory: /github/home/
       run: |
         ls -R
         cat test.txt
