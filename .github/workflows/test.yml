@@ -20,13 +20,13 @@ jobs:
       - name: make files
         run: |
           echo "hello world" > test.txt
-          mkdir -p ./artifact/test
-          cp test.txt ./artifact/test/
+          mkdir -p ./artifact
+          cp test.txt ./artifact/
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: test
-          path: ./artifact/test/
+          name: my-artifact
+          path: ./artifact/test.txt
   build_openwrt:
     name: OpenWrt-x86_64
     runs-on: ubuntu-latest
@@ -42,13 +42,12 @@ jobs:
 #         docker exec openwrt bash
 #         ls /
     - name: Install test.txt
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
-        name: test
-        path: ./artifact/test/
-        
-    - name: cat test.txt
+        name: my-artifact
+    - name: Display structure of downloaded files
       run: |
+        ls -R
         ls ./artifact/test/
         cat ./artifact/test/test.txt
 
