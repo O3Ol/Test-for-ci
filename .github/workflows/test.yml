@@ -54,6 +54,8 @@ jobs:
         docker cp ./test.txt openwrt:/
         docker exec openwrt cat /test.txt
         docker exec openwrt opkg -v
+        docker exec openwrt mkdir /var/lock
+        docker exec openwrt ls /var
 
     - name: Build curl
       run: |
