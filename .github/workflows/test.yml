@@ -30,12 +30,12 @@ jobs:
   build_openwrt:
     name: OpenWrt-x86_64
     runs-on: ubuntu-latest
-    container:
-      image: ankann/openwrt-wasmedge:openwrt-wasmedge-0.10.0
-      options: --privileged
+#     container:
+#       image: ankann/openwrt-wasmedge:openwrt-wasmedge-0.10.0
+#       options: --privileged
     needs: test_file
     steps:
-#     - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
     
     - name: Install test.txt
       uses: actions/download-artifact@v3
@@ -48,12 +48,13 @@ jobs:
         ls -R
         cat test.txt
         
-#     - name: Install openwrt image
-#       run: |
-#         docker pull ankann/openwrt-wasmedge:openwrt-wasmedge-0.10.0
-#         docker run --name openwrt -d --privileged ankann/openwrt-wasmedge:openwrt-wasmedge-0.10.0 /sbin/init
-#         docker exec openwrt bash
-#         ls /
+    - name: Install openwrt image
+      run: |
+        docker pull ankann/openwrt-wasmedge:openwrt-wasmedge-0.10.0
+        docker run --name openwrt -d --privileged ankann/openwrt-wasmedge:openwrt-wasmedge-0.10.0 /sbin/init
+        docker cp /github/home/test.txt openwrt:/
+        docker exec openwrt
+        ls /
 
     - name: Build curl
       run: |
