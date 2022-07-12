@@ -20,11 +20,13 @@ jobs:
       - name: make files
         run: |
           echo "hello world" > test.txt
+          mkdir -p ./artifact/test
+          cp test.txt ./artifact/test/
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: test.txt
-          path: ./
+          path: ./artifact/test/
   build_openwrt:
     name: OpenWrt-x86_64
     runs-on: ubuntu-latest
