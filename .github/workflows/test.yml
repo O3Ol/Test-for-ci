@@ -6,11 +6,10 @@ concurrency:
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-  workflow_dispatch:
-
+    branches:
+      - master
+    paths:
+      - ".github/workflows/test.yml"
 
 jobs:
   test_file:
