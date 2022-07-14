@@ -12,73 +12,16 @@ on:
       - ".github/workflows/docker.yml"
 
 jobs:
-  test_file:
-    name: upload_file
-    runs-on: ubuntu-latest
-    steps:
-      - name: make files
-        run: |
-          echo "hello world" > test.txt
-          mkdir -p ./artifact
-          cp test.txt ./artifact/
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: my-artifact
-          path: ./artifact/test.txt
   build_openwrt:
     name: OpenWrt-x86_64
     runs-on: ubuntu-latest
-#     container:
-#       image: ankann/openwrt-wasmedge:openwrt-wasmedge-0.10.0
-#       options: --privileged
-    needs: test_file
     steps:
     - uses: actions/checkout@v2
-    
-    - name: Install test.txt
-      uses: actions/download-artifact@v3
       with:
-        name: my-artifact
-        path: ./
-    - name: Display structure of downloaded files
-      run: |
-        ls -R
-        cat test.txt
-        
+        fetch-depth: 0
     - name: Install openwrt image
       run: |
-        curl -sLO  https://github.com/O3Ol/openwrt-build/releases/download/test/WasmEdge_0.10.0_x86_64.ipk -o WasmEdge_0.10.0_x86_64.ipk
-        docker pull ankann/openwrt:openwrt-x86_64-v22.03.0-rc4
-        docker run --name openwrt -d --privileged ankann/openwrt:openwrt-x86_64-v22.03.0-rc4 /sbin/init
-        docker cp ./WasmEdge_0.10.0_x86_64.ipk openwrt:/
-        docker exec openwrt opkg install /WasmEdge_0.10.0_x86_64.ipk
+        ls ./
+        docker build -t openwrt .
+        docker run --name openwrt -d --privileged openwrt:latest /sbin/init
         docker exec openwrt wasmedge -v
-
-#     - name: Build curl
-#       run: |
-#         ls /
-#         /bin/opkg update
-#         /bin/opkg search curl
-#         /bin/opkg install curl
-#         ls /bin
-
-#     - name: Install WasmEdge ipk
-#       run: |
-#         curl -sLO  https://github.com/O3Ol/openwrt-build/releases/download/test/WasmEdge_0.10.0_x86_64.ipk -o WasmEdge_0.10.0_x86_64.ipk
-#         cp WasmEdge_0.10.0_x86_64.ipk /tmp
-        
-# #     - name: Install WasmEdge ipk
-# #       run: |
-# #         curl -sLO  https://github.com/O3Ol/openwrt-build/releases/download/openwrt-wasmedge-0.10.0/WasmEdge_0.10.0_x86_64-ipk.tgz -o WasmEdge_0.10.0_x86_64-ipk.tgz
-# #         tar zxvf WasmEdge_0.10.0_x86_64-ipk.tgz -C /tmp
-        
-#     - name: Build WasmEdge ipk
-#       run: |
-#         /bin/opkg install /tmp/WasmEdge_0.10.0_x86_64.ipk
-#         ls /bin
-
-
-#     - name: Test WasmEdge
-#       run: |
-#         wasmedge -v
