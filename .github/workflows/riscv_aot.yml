@@ -1,0 +1,40 @@
+name: Build and Test WasmEdge on riscv64 arch
+
+concurrency:
+  group: build-riscv64-aot-${{ github.head_ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/riscv_aot.yml"
+
+jobs:
+  build_riscv64:
+    name: riscv64
+    runs-on: ubuntu-latest
+    container:
+      image: secondstate/wasmedge-test:riscv
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: pull WasmEdge
+      run: |
+        git clone https://github.com/O3Ol/WasmEdge
+        cd WasmEdge
+        git checkout riscv64
+        mkdir build && cd build
+        cmake .. -DCMAKE_BUILD_TYPE=Release -DWASMEDGE_BUILD_AOT_RUNTIME=ON -DCMAKE_INSTALL_PREFIX:PATH=../_install \
+          -DCMAKE_CROSSCOMPILING=TRUE -DCMAKE_SYSTEM_NAME=Linux -DCMAKE_SYSROOT="/opt/riscv64/sysroot" \
+          -DCMAKE_C_COMPILER=/opt/riscv64/bin/riscv64-unknown-linux-gnu-gcc \
+          -DCMAKE_CXX_COMPILER=/opt/riscv64/bin/riscv64-unknown-linux-gnu-g++ \
+          -DCMAKE_FIND_ROOT_PATH=/opt/riscv64/riscv64-unknown-linux-gnu \
+          -DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM=NEVER \
+          -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=ONLY \
+          -DCMAKE_FIND_ROOT_PATH_MODE_PACKAGE=ONLY
+        make -j
+        make install
+        
