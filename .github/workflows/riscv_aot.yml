@@ -14,15 +14,16 @@ on:
 jobs:
   build_riscv64:
     name: riscv64
-    runs-on: ubuntu-latest
+    runs-on: ARM64
     container:
-      image: secondstate/wasmedge-test:riscv
+      image: riscv64/ubuntu:latest
     steps:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
     - name: pull WasmEdge
       run: |
+        apt-get install git
         git clone https://github.com/O3Ol/WasmEdge
         cd WasmEdge
         git checkout riscv64
