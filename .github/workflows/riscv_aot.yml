@@ -21,7 +21,7 @@ jobs:
         fetch-depth: 0
     - name: pull WasmEdge
       run: |
-        apt install  --no-install-recommends qemu-user-static binfmt-support
+        sudo apt-get install --no-install-recommends qemu-user-static binfmt-support
         update-binfmts --enable qemu-riscv64
         update-binfmts --display qemu-riscv64
         sudo chmod a+x /usr/bin/qemu-*
