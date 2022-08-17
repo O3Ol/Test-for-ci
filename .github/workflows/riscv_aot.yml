@@ -15,8 +15,6 @@ jobs:
   build_riscv64_pre:
     name: riscv64_pre
     runs-on: ubuntu-latest
-    container:
-      image: riscv64/ubuntu:latest
     steps:
     - uses: actions/checkout@v2
       with:
