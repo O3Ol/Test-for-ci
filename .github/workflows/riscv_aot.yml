@@ -81,8 +81,10 @@ jobs:
         install: |
           apt-get update -q -y
           apt-get install -q -y git cmake g++ dpkg
+          apt-get install -q -y software-properties-common libboost-all-dev
+          apt-get install -q -y llvm-12-dev liblld-12-dev
         # Produce a binary artifact and place it in the mounted volume
         run: |
-          ls
+          uname -a
 
         
