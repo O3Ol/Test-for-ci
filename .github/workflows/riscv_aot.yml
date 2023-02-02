@@ -25,18 +25,60 @@ jobs:
 #         cd cloud-lab
 #         LOGIN=bash tools/docker/run riscv-lab
 #         ls
-  build_riscv64:
-    name: riscv64
+#   build_riscv64:
+#     name: riscv64
+#     runs-on: ubuntu-latest
+#     container:
+#       image: riscv64/ubuntu:latest
+#     steps:
+#     - uses: actions/checkout@v2
+#       with:
+#         fetch-depth: 0
+#     - name: pull WasmEdge
+#       run: |
+#         uname -a
+#         ls
+  build-riscv64:
+    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
+    # You can convert this to a matrix build if you need cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
     runs-on: ubuntu-latest
-    container:
-      image: riscv64/ubuntu:latest
+    name: Build on RISC-V 64
+
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+    - uses: uraimo/run-on-arch-action@v2
+      name: Build artifact
+      id: build
       with:
-        fetch-depth: 0
-    - name: pull WasmEdge
-      run: |
-        uname -a
-        ls
+        arch: none
+        distro: none
+        base_image: riscv64/ubuntu
+
+        # Not required, but speeds up builds by storing container images in
+        # a GitHub package registry.
+        githubToken: ${{ github.token }}
+
+        # Mount the artifacts directory as /artifacts in the container
+        dockerRunArgs: |
+          --volume "${PWD}:/workplace"
+        # Pass some environment variables to the container
+        env: | # YAML, but pipe character is necessary
+          BUILD_TYPE: ${{ env.BUILD_TYPE }}
+        # The shell to run commands with in the container
+        shell: /bin/sh
+
+        # Install some dependencies in the container. This speeds up builds if
+        # you are also using githubToken. Any dependencies installed here will
+        # be part of the container image that gets cached, so subsequent
+        # builds don't have to re-install them. The image layer is cached
+        # publicly in your project's package repository, so it is vital that
+        # no secrets are present in the container state or logs.
+        install: |
+          apt-get update -q -y
+          apt-get install -q -y git cmake g++ dpkg
+        # Produce a binary artifact and place it in the mounted volume
+        run: |
+          ls
 
         
