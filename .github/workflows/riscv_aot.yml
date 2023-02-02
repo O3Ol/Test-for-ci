@@ -12,31 +12,31 @@ on:
       - ".github/workflows/riscv_aot.yml"
 
 jobs:
-  build_riscv64_pre:
-    name: riscv64_pre
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-    - name: pull Riscv64
-      run: |
-        git clone https://gitee.com/tinylab/cloud-lab.git
-        cd cloud-lab
-        LOGIN=bash tools/docker/run riscv-lab
-        ls
-#   build_riscv64:
-#     name: riscv64
+#   build_riscv64_pre:
+#     name: riscv64_pre
 #     runs-on: ubuntu-latest
-#     needs: build_riscv64_pre
-#     container:
-#       image: riscv64/ubuntu:21.04
 #     steps:
 #     - uses: actions/checkout@v2
 #       with:
 #         fetch-depth: 0
-#     - name: pull WasmEdge
+#     - name: pull Riscv64
 #       run: |
+#         git clone https://gitee.com/tinylab/cloud-lab.git
+#         cd cloud-lab
+#         LOGIN=bash tools/docker/run riscv-lab
 #         ls
+  build_riscv64:
+    name: riscv64
+    runs-on: ubuntu-latest
+    container:
+      image: riscv64/ubuntu:latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: pull WasmEdge
+      run: |
+        uname -a
+        ls
 
         
