@@ -86,5 +86,10 @@ jobs:
         # Produce a binary artifact and place it in the mounted volume
         run: |
           uname -a
+          git clone https://github.com/O3Ol/WasmEdge.git
+          cd WasmEdge && git checkout riscv64
+          mkdir -p build && cd build
+          cmake -DCMAKE_BUILD_TYPE=Release .. && make -j
+          ./tools/wasmedge/wasmedge -v
 
         
